@@ -156,6 +156,15 @@
   .about a{color:var(--red);text-decoration:none}
   .about a:hover{text-decoration:underline}
   .about strong{color:var(--ink)}
+
+  /* LEVEL FILTER */
+  .lvl-row{display:none;gap:7px;align-items:center;margin:4px 0 -4px;flex-wrap:wrap}
+  .lvl-row .lbl{font-size:.75rem;color:var(--soft);font-weight:600;white-space:nowrap}
+  .lf-btn{border:1px solid var(--line2);background:var(--card);color:var(--soft);border-radius:8px;padding:4px 11px;font-size:.78rem;cursor:pointer;font-family:var(--sans);transition:.15s}
+  .lf-btn:hover{border-color:var(--red);color:var(--red)}
+  .lf-btn.active{background:var(--red);border-color:var(--red);color:#fff;font-weight:700}
+  .banner-site{background:linear-gradient(135deg,#C0392B,#922B21);color:#fff;border-radius:14px;padding:14px 18px;margin-top:14px;font-size:.88rem;text-align:center;display:none}
+  .banner-site a{color:#FADBD8;font-weight:700}
 </style>
 </head>
 <body>
@@ -164,7 +173,7 @@
   <div class="tb">
     <div class="brand">
       <h1>Learn Mandarin 学中文</h1>
-      <span class="sub">HSK1 · 150 Essential Words · Free &amp; Offline</span>
+      <span class="sub" id="sub-line">HSK1 · 150 Essential Words · Free &amp; Offline</span>
     </div>
     <div class="sts">
       <span>Known: <b id="cnt-k">0</b></span>
@@ -183,6 +192,16 @@
     <button class="tab active" onclick="switchTab('cards',this)">Flashcards 卡片</button>
     <button class="tab" onclick="switchTab('read',this)">Stories 故事</button>
     <button class="tab" onclick="switchTab('about',this)">About</button>
+  </div>
+  <div class="lvl-row" id="lvl-filter">
+    <span class="lbl">Level:</span>
+    <button class="lf-btn active" onclick="setLevel('all',this)">All</button>
+    <button class="lf-btn" onclick="setLevel('1',this)">HSK1</button>
+    <button class="lf-btn" onclick="setLevel('2',this)">HSK2</button>
+    <button class="lf-btn" onclick="setLevel('3',this)">HSK3</button>
+  </div>
+  <div class="banner-site" id="banner-site">
+    ✨ Full version (HSK1–3, 450+ words) at <a href="https://ordinarymantrying.com/tools/mandarin-flashcards.html" target="_blank">ordinarymantrying.com</a>
   </div>
 
   <!-- FLASHCARDS -->
@@ -257,7 +276,7 @@
   <div id="tab-about" style="display:none">
     <div class="about">
       <h3>About This Tool</h3>
-      <p>All <strong>150 words from HSK Level 1</strong> — China's official beginner Chinese proficiency standard. HSK1 lets you handle greetings, numbers, time, daily objects, and simple sentences.</p>
+      <p id="about-intro">All <strong>150 words from HSK Level 1</strong> — China's official beginner Chinese proficiency standard. HSK1 lets you handle greetings, numbers, time, daily objects, and simple sentences.</p>
       <p><strong>Flashcards:</strong> See the Chinese character. Tap to reveal pinyin + English meaning + example sentence. Rate yourself: <em>Know / Fuzzy / Again</em>. Your progress is saved in your browser.</p>
       <p><strong>Stories:</strong> Read an English story first. Then reveal the Chinese version. Tap any Chinese character to look it up instantly. Characters from HSK1 show full detail; others show basic info.</p>
       <p>No login. No tracking. No cost. Data stays on your device.</p>
@@ -445,13 +464,26 @@ const WORDS = [
   {c:"做",py:"zuò",pos:"v.",en:"do; make; cook",zh:"你做什么工作？",zhen:"What do you do for work?"}
 ];
 
+/* Extended word set — HSK2+3 loaded via fetch on the website version */
+let ALL_WORDS = WORDS.slice();
+let currentLevel = 'all';
+
+function getFilteredWords(){
+  if(currentLevel==='all') return ALL_WORDS;
+  const n=parseInt(currentLevel);
+  if(n===1) return ALL_WORDS.filter(w=>!w.hsk||w.hsk===1);
+  return ALL_WORDS.filter(w=>w.hsk===n);
+}
+
 /* Build lookup: single char → word entry */
 const LOOKUP = {};
-WORDS.forEach(w=>{
-  // index by each character in the word
-  [...w.c].forEach(ch=>{ if(!LOOKUP[ch]) LOOKUP[ch]=w; });
-  LOOKUP[w.c] = w; // also by full word
-});
+function rebuildLookup(list){
+  list.forEach(w=>{
+    [...w.c].forEach(ch=>{ if(!LOOKUP[ch]) LOOKUP[ch]=w; });
+    LOOKUP[w.c]=w;
+  });
+}
+rebuildLookup(WORDS);
 
 /* ---- PASSAGES: sentence-by-sentence ---- */
 const PASSAGES = [
@@ -534,15 +566,25 @@ function resetAll(){
 function shuffle(a){for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;}
 
 function init(){
+  const fw=getFilteredWords();
   const s=loadState();
   if(s&&s.deck&&s.deck.length){
-    deck=s.deck.map(c=>WORDS.find(w=>w.c===c)).filter(Boolean);
-    if(!deck.length) deck=shuffle([...WORDS]);
+    deck=s.deck.map(c=>ALL_WORDS.find(w=>w.c===c)).filter(Boolean);
+    if(!deck.length) deck=shuffle([...fw]);
     curIdx=0; stats=s.stats||{k:0,a:0};
   } else {
-    deck=shuffle([...WORDS]); curIdx=0; stats={k:0,a:0};
+    deck=shuffle([...fw]); curIdx=0; stats={k:0,a:0};
   }
   showCard();
+}
+
+function setLevel(lv, btn){
+  currentLevel=lv;
+  document.querySelectorAll('.lf-btn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  localStorage.removeItem('mhsk1');
+  deck=shuffle([...getFilteredWords()]); curIdx=0; stats={k:0,a:0};
+  showCard(); updateStats();
 }
 
 function showCard(){
@@ -552,7 +594,7 @@ function showCard(){
     doneEl.classList.add('vis'); fc.style.display='none';
     document.getElementById('btn-show').classList.add('hidden');
     document.getElementById('btn-row').classList.add('hidden');
-    document.getElementById('done-tot').textContent=WORDS.length;
+    document.getElementById('done-tot').textContent=getFilteredWords().length;
     document.getElementById('done-ag').textContent=stats.a;
     return;
   }
@@ -585,13 +627,13 @@ function rate(r){
   if(r!=='fuzz') curIdx=Math.min(curIdx,deck.length);
   showCard();
 }
-function restart(){deck=shuffle([...WORDS]);curIdx=0;stats={k:0,a:0};saveState();showCard();}
+function restart(){deck=shuffle([...getFilteredWords()]);curIdx=0;stats={k:0,a:0};saveState();showCard();}
 
 function updateStats(){
   document.getElementById('cnt-k').textContent=stats.k;
   document.getElementById('cnt-l').textContent=deck.length-curIdx;
   document.getElementById('cnt-a').textContent=stats.a;
-  document.getElementById('pbar').style.width=(stats.k/WORDS.length*100)+'%';
+  document.getElementById('pbar').style.width=(stats.k/getFilteredWords().length*100)+'%';
 }
 
 /* ---- POPUP ---- */
@@ -717,6 +759,22 @@ function switchTab(id,btn){
 }
 
 buildStoryList();
+
+fetch('mandarin-flashcards-hsk23.json')
+  .then(r=>{ if(!r.ok) throw new Error(); return r.json(); })
+  .then(extra=>{
+    ALL_WORDS=[...WORDS,...extra];
+    rebuildLookup(extra);
+    const tot=ALL_WORDS.length;
+    document.getElementById('sub-line').textContent='HSK1–3 · '+tot+' Words · Free & Offline';
+    document.getElementById('lvl-filter').style.display='flex';
+    document.getElementById('about-intro').innerHTML='<strong>'+tot+' words across HSK1, HSK2, and HSK3</strong> — China\'s official Mandarin proficiency standards. Use the Level filter above to study one level at a time, or study All at once.';
+    if(stats.k===0&&stats.a===0&&curIdx===0){ init(); }
+  })
+  .catch(()=>{
+    document.getElementById('banner-site').style.display='block';
+  });
+
 init();
 </script>
 </body>
