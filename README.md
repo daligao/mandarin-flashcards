@@ -2,7 +2,7 @@
 
 > Learn Mandarin Chinese the natural way — English first, Chinese revealed when you're ready.
 
-**[→ Try it live](https://ordinarymantrying.com/tools/mandarin-flashcards.html)** &nbsp;·&nbsp; **[GitHub Pages mirror](https://daligao.github.io/mandarin-flashcards/mandarin-flashcards.html)**
+**[→ Try it live (full version)](https://ordinarymantrying.com/tools/mandarin-flashcards.html)** &nbsp;·&nbsp; **[GitHub Pages mirror](https://daligao.github.io/mandarin-flashcards/mandarin-flashcards.html)**
 
 ---
 
@@ -31,6 +31,7 @@ Two modes:
 - 💾 **No login** — progress stored in localStorage
 - 🚫 **No tracking** — runs entirely in your browser, nothing sent anywhere
 - 🎨 **Red/crimson theme** — distinctly Chinese feel
+- 🔊 **Text-to-speech** — hear native Chinese pronunciation
 
 ---
 
@@ -46,9 +47,22 @@ Single file. No build step. No dependencies.
 
 ## The story behind it
 
-I built Chinese study tools for Chinese students learning English — then realized English speakers learning Mandarin needed the same thing, flipped. So I flipped it.
+I'm an ordinary person living in China, writing about what I observe — the culture, the career paths, the everyday moments that don't make the international headlines. I built this tool because I needed it myself: a flashcard system that felt natural, not like drilling.
 
-**[Read more →](https://ordinarymantrying.com)**
+I flipped the logic of my Chinese-student tools (designed for Chinese people learning English) and rebuilt everything for English speakers learning Mandarin.
+
+**More tools and writing about China:** [ordinarymantrying.com](https://ordinarymantrying.com)
+
+**All free tools:** [ordinarymantrying.com/tools/](https://ordinarymantrying.com/tools/)
+
+**Also try:** [Chinese Writing Toolkit](https://ordinarymantrying.com/tools/chinese-writing-toolkit.html) — sentence banks, templates, and model essays for 11 types of Chinese writing
+
+---
+
+## Related reading on the blog
+
+- [What it's actually like to learn Chinese as an adult](https://ordinarymantrying.com)
+- [Tools page — all free, all offline](https://ordinarymantrying.com/tools/)
 
 ---
 
