@@ -1,0 +1,723 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Learn Mandarin Chinese — HSK1 Cards + Stories (Free, No Login)</title>
+<meta name="description" content="Learn 150 essential Mandarin Chinese words (HSK1). Flashcards, real stories with clickable Chinese characters, and English-first reading passages. Free, offline, no account needed.">
+<style>
+  :root{
+    --bg:#F5F0EB;--card:#FFF;
+    --ink:#1B2335;--soft:#5C667B;--faint:#9AA3B4;
+    --red:#C0392B;--red-d:#922B21;--red-s:#FDEDEC;--red-l:#FADBD8;
+    --grn:#1B9E78;--grn-bg:#E3F4EE;
+    --ylw:#B97E12;--ylw-bg:#F8EFD8;
+    --bad:#D5524B;--bad-bg:#FBE9E8;
+    --line:#E3E7EF;--line2:#D2D8E3;
+    --sans:-apple-system,BlinkMacSystemFont,"Segoe UI","Noto Sans SC","PingFang SC","Microsoft YaHei",sans-serif;
+    --shad:0 1px 2px rgba(27,35,53,.04),0 10px 30px rgba(27,35,53,.07);
+  }
+  *{box-sizing:border-box}html,body{margin:0;padding:0}
+  body{background:var(--bg);color:var(--ink);font-family:var(--sans);font-size:16px;line-height:1.5;-webkit-font-smoothing:antialiased}
+  .wrap{max-width:680px;margin:0 auto;padding:0 16px 64px}
+
+  /* TOPBAR */
+  .topbar{position:sticky;top:0;z-index:50;background:rgba(245,240,235,.95);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+  .tb{max-width:680px;margin:0 auto;padding:10px 16px}
+  .brand{display:flex;align-items:baseline;gap:9px;flex-wrap:wrap}
+  .brand h1{font-size:1.15rem;font-weight:800;margin:0;color:var(--red-d)}
+  .brand .sub{color:var(--soft);font-size:.78rem}
+  .sts{display:flex;gap:11px;align-items:center;margin-top:7px;font-size:.8rem;color:var(--soft);flex-wrap:wrap}
+  .sts b{color:var(--red-d);font-variant-numeric:tabular-nums}
+  .sts .dot{width:4px;height:4px;border-radius:50%;background:var(--line2)}
+  .btn-rst{margin-left:auto;border:1px solid var(--line2);background:var(--card);color:var(--soft);border-radius:999px;padding:4px 12px;font-size:.76rem;cursor:pointer;font-family:var(--sans)}
+  .btn-rst:hover{border-color:var(--red);color:var(--red)}
+  .pbar{margin-top:7px;height:4px;background:#E0E4EC;border-radius:99px;overflow:hidden}
+  .pbar>i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--red),#e74c3c);border-radius:99px;transition:width .4s cubic-bezier(.22,1,.36,1)}
+
+  /* TABS */
+  .tabs{display:flex;gap:8px;margin:16px 0 4px;flex-wrap:wrap}
+  .tab{flex:1 1 0;min-width:90px;border:1px solid var(--line2);background:var(--card);color:var(--soft);border-radius:12px;padding:9px 6px;font-size:.88rem;cursor:pointer;font-family:var(--sans);transition:.15s;text-align:center}
+  .tab:hover{border-color:var(--red)}
+  .tab.active{background:var(--red);border-color:var(--red);color:#fff;font-weight:700;box-shadow:var(--shad)}
+
+  /* FLASHCARD */
+  .deck{margin-top:16px}
+  .fc{background:var(--card);border:1px solid var(--line);border-radius:20px;box-shadow:var(--shad);padding:36px 26px 26px;animation:rise .25s ease both;cursor:pointer;min-height:256px;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center}
+  @keyframes rise{from{opacity:0;transform:translateY(7px)}to{opacity:1;transform:none}}
+  .fc-lbl{font-size:.7rem;letter-spacing:.12em;text-transform:uppercase;color:var(--faint);font-weight:600;margin-bottom:14px}
+  .fc-zh{font-size:clamp(3.4rem,17vw,5.8rem);line-height:1.05;font-weight:700;margin-bottom:0}
+  .fc-py{font-size:1.25rem;color:var(--red);margin-top:8px;font-weight:600;min-height:1.7rem;letter-spacing:.05em}
+  .fc-pos{display:inline-block;border:1px solid var(--red-l);background:var(--red-s);color:var(--red-d);border-radius:6px;padding:2px 9px;font-size:.7rem;font-weight:700;margin-top:8px}
+  .fc-en{font-size:1.3rem;color:var(--ink);font-weight:700;margin-top:12px}
+  .fc-ex{margin-top:16px;padding-top:14px;border-top:1px dashed var(--line2);text-align:left;width:100%}
+  .fc-exzh{font-size:1.1rem;color:var(--ink);line-height:1.55;font-weight:500}
+  .fc-exen{font-size:.9rem;color:var(--soft);margin-top:3px;font-style:italic}
+  .fc-hint{font-size:.83rem;color:var(--faint);margin-top:16px}
+  .reveal{display:none}
+  .fc.shown .reveal{display:block}
+  .fc.shown .fc-hint{display:none}
+
+  .btn-show{width:100%;border-radius:13px;padding:14px;font-size:1rem;font-weight:700;cursor:pointer;background:var(--red);color:#fff;border:none;font-family:var(--sans);margin-top:12px;transition:.15s}
+  .btn-show:hover{background:var(--red-d)}
+  .btn-row{display:flex;gap:9px;margin-top:11px}
+  .btn{flex:1;border-radius:12px;padding:13px 8px;font-size:.9rem;font-weight:700;cursor:pointer;border:none;font-family:var(--sans);transition:.15s}
+  .b-know{background:var(--grn-bg);color:var(--grn)}
+  .b-know:hover{background:#c4e8d6}
+  .b-fuzz{background:var(--ylw-bg);color:var(--ylw)}
+  .b-fuzz:hover{background:#eddfb0}
+  .b-again{background:var(--bad-bg);color:var(--bad)}
+  .b-again:hover{background:#f3d0ce}
+  .hidden{display:none!important}
+
+  /* DONE */
+  .done{text-align:center;padding:48px 16px;display:none}
+  .done.vis{display:block}
+  .done-ico{font-size:3.2rem;margin-bottom:14px}
+  .done-t{font-size:1.5rem;font-weight:800;margin:0 0 7px}
+  .done-s{color:var(--soft);margin:0 0 24px}
+  .btn-restart{border-radius:12px;padding:13px 24px;font-size:.95rem;font-weight:700;cursor:pointer;background:var(--red);color:#fff;border:none;font-family:var(--sans)}
+
+  /* READING — story list */
+  .story-grid{display:flex;flex-direction:column;gap:10px;margin-top:4px}
+  .story-card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:18px 18px 14px;cursor:pointer;transition:.15s;box-shadow:var(--shad)}
+  .story-card:hover{border-color:var(--red);transform:translateY(-1px)}
+  .sc-num{font-size:.68rem;letter-spacing:.1em;text-transform:uppercase;color:var(--faint);font-weight:600}
+  .sc-title{font-size:1.05rem;font-weight:800;margin:4px 0 2px}
+  .sc-zh{font-size:.88rem;color:var(--soft)}
+  .sc-meta{font-size:.8rem;color:var(--soft);margin-top:8px;display:flex;gap:14px}
+  .sc-done{color:var(--red);font-weight:600}
+
+  /* READING — sentence reader */
+  .reader-back{font-size:.85rem;color:var(--red);cursor:pointer;margin:10px 0 14px;display:inline-flex;align-items:center;gap:4px}
+  .reader-back:hover{text-decoration:underline}
+  .reader-hd{margin-bottom:8px}
+  .reader-title{font-size:1.05rem;font-weight:800}
+  .reader-sub{font-size:.8rem;color:var(--soft);margin-top:2px}
+  .rdr-bar{height:4px;background:#E0E4EC;border-radius:99px;overflow:hidden;margin:6px 0 14px}
+  .rdr-bar>i{display:block;height:100%;background:linear-gradient(90deg,var(--red),#e74c3c);border-radius:99px;transition:width .35s cubic-bezier(.22,1,.36,1)}
+  /* sentence card */
+  .sent-card{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:28px 22px 22px;box-shadow:var(--shad);cursor:pointer;min-height:160px;animation:rise .22s ease both}
+  .sent-lbl{font-size:.68rem;letter-spacing:.12em;text-transform:uppercase;color:var(--faint);font-weight:600;margin-bottom:12px}
+  .sent-en{font-size:1.15rem;color:var(--ink);line-height:1.75;font-weight:500}
+  .sent-hint{font-size:.82rem;color:var(--faint);margin-top:16px}
+  .sent-zh-block{display:none;margin-top:0}
+  .sent-zh-block.open{display:block}
+  .sent-zh-lbl{font-size:.68rem;letter-spacing:.12em;text-transform:uppercase;color:var(--red);font-weight:600;margin:16px 0 8px;padding-top:14px;border-top:1px dashed var(--line2)}
+  .sent-zh{font-size:1.15rem;color:var(--ink);line-height:1.75;font-weight:500}
+  /* clickable Chinese chars */
+  .zh-tok{cursor:pointer;border-bottom:1px dotted var(--red-l);transition:background .12s;border-radius:2px;padding:0 1px}
+  .zh-tok:hover{background:var(--red-s)}
+  /* nav buttons */
+  .rdr-actions{margin-top:12px}
+  .btn-show-zh{width:100%;border-radius:12px;padding:13px;font-size:.95rem;font-weight:700;cursor:pointer;background:var(--red);color:#fff;border:none;font-family:var(--sans);transition:.15s}
+  .btn-show-zh:hover{background:var(--red-d)}
+  .nav-row{display:flex;gap:8px;margin-top:8px}
+  .btn-nav{flex:1;border-radius:12px;padding:13px;font-size:.9rem;font-weight:700;cursor:pointer;background:var(--card);color:var(--ink);border:1px solid var(--line2);font-family:var(--sans);transition:.15s}
+  .btn-nav-nxt{background:var(--red);color:#fff;border-color:var(--red)}
+  .btn-nav:hover{border-color:var(--red)}
+  .btn-nav-nxt:hover{background:var(--red-d)}
+  .btn-nav:disabled{opacity:.4;cursor:default}
+  /* done banner */
+  .story-done{text-align:center;padding:32px 16px;background:var(--card);border:1px solid var(--line);border-radius:18px;box-shadow:var(--shad);animation:rise .25s ease both}
+  .story-done-ico{font-size:2.8rem;margin-bottom:10px}
+  .story-done-t{font-size:1.3rem;font-weight:800;margin:0 0 6px}
+  .story-done-s{color:var(--soft);font-size:.92rem;margin:0 0 18px}
+  .btn-story-restart{border-radius:12px;padding:12px 22px;font-size:.9rem;font-weight:700;cursor:pointer;background:var(--red);color:#fff;border:none;font-family:var(--sans)}
+  /* vocab */
+  .rdr-vocab{margin-top:20px;background:var(--card);border:1px solid var(--line);border-radius:14px;padding:14px;box-shadow:var(--shad)}
+  .rdr-vocab-lbl{font-size:.68rem;letter-spacing:.1em;text-transform:uppercase;color:var(--faint);font-weight:600;margin-bottom:8px}
+  .chips{display:flex;flex-wrap:wrap;gap:7px}
+  .chip{border:1px solid var(--red-l);background:var(--red-s);border-radius:8px;padding:5px 10px;font-size:.85rem;cursor:pointer;transition:.12s}
+  .chip:hover{background:var(--red-l)}
+  .chip .cz{font-weight:700;color:var(--ink)}
+  .chip .cp{color:var(--red);font-size:.76rem;margin:0 3px}
+  .chip .ce{color:var(--soft);font-size:.76rem}
+
+  /* POPUP */
+  .popup-ov{display:none;position:fixed;inset:0;background:rgba(0,0,0,.35);z-index:200;align-items:flex-end;justify-content:center}
+  .popup-ov.open{display:flex}
+  .popup{background:var(--card);border-radius:20px 20px 0 0;padding:24px 24px 36px;width:100%;max-width:480px;animation:slideup .22s ease both;box-shadow:0 -8px 40px rgba(0,0,0,.15)}
+  @keyframes slideup{from{transform:translateY(100%)}to{transform:translateY(0)}}
+  .popup-close{float:right;background:none;border:none;font-size:1.4rem;cursor:pointer;color:var(--soft);margin:-4px -4px 0 0}
+  .popup-char{font-size:4.5rem;font-weight:700;line-height:1.1;margin:8px 0 4px;color:var(--ink);display:block}
+  .popup-py{font-size:1.4rem;color:var(--red);font-weight:600;margin-bottom:4px}
+  .popup-pos{display:inline-block;border:1px solid var(--red-l);background:var(--red-s);color:var(--red-d);border-radius:5px;padding:2px 8px;font-size:.7rem;font-weight:700;margin-bottom:10px}
+  .popup-en{font-size:1.1rem;color:var(--ink);font-weight:600;margin-bottom:12px}
+  .popup-ex{padding:11px 12px;background:#FAF7F3;border-radius:9px;border-left:3px solid var(--red)}
+  .popup-exzh{font-size:1rem;color:var(--ink);line-height:1.55;font-weight:500}
+  .popup-exen{font-size:.88rem;color:var(--soft);font-style:italic;margin-top:3px}
+  .popup-none{color:var(--soft);font-size:.95rem;margin-top:10px}
+
+  /* ABOUT */
+  .about{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:22px;margin-top:4px;box-shadow:var(--shad)}
+  .about h3{margin:0 0 9px;font-size:1.05rem}
+  .about p{color:var(--soft);font-size:.9rem;margin:0 0 9px;line-height:1.6}
+  .about a{color:var(--red);text-decoration:none}
+  .about a:hover{text-decoration:underline}
+  .about strong{color:var(--ink)}
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="tb">
+    <div class="brand">
+      <h1>Learn Mandarin 学中文</h1>
+      <span class="sub">HSK1 · 150 Essential Words · Free &amp; Offline</span>
+    </div>
+    <div class="sts">
+      <span>Known: <b id="cnt-k">0</b></span>
+      <span class="dot"></span>
+      <span>Left: <b id="cnt-l">150</b></span>
+      <span class="dot"></span>
+      <span>Again: <b id="cnt-a">0</b></span>
+      <button class="btn-rst" onclick="resetAll()">Reset</button>
+    </div>
+    <div class="pbar"><i id="pbar"></i></div>
+  </div>
+</div>
+
+<div class="wrap">
+  <div class="tabs">
+    <button class="tab active" onclick="switchTab('cards',this)">Flashcards 卡片</button>
+    <button class="tab" onclick="switchTab('read',this)">Stories 故事</button>
+    <button class="tab" onclick="switchTab('about',this)">About</button>
+  </div>
+
+  <!-- FLASHCARDS -->
+  <div id="tab-cards" class="deck">
+    <div id="card-area">
+      <div class="fc" id="main-fc" onclick="revealCard()">
+        <div class="fc-lbl">Tap to reveal · 点击翻转</div>
+        <div class="fc-zh" id="fc-zh">你好</div>
+        <div class="fc-py reveal" id="fc-py">nǐ hǎo</div>
+        <div class="fc-pos reveal" id="fc-pos">Greeting</div>
+        <div class="fc-en reveal" id="fc-en">Hello / Hi</div>
+        <div class="fc-ex reveal">
+          <div class="fc-exzh" id="fc-exzh">你好！你叫什么名字？</div>
+          <div class="fc-exen" id="fc-exen">Hello! What's your name?</div>
+        </div>
+        <div class="fc-hint">👆 Tap card to see meaning</div>
+      </div>
+      <button class="btn-show hidden" id="btn-show" onclick="revealCard()">Show Meaning 显示意思</button>
+      <div class="btn-row hidden" id="btn-row">
+        <button class="btn b-know" onclick="rate('know')">✓ Know<br><small>认识</small></button>
+        <button class="btn b-fuzz" onclick="rate('fuzz')">~ Fuzzy<br><small>有点模糊</small></button>
+        <button class="btn b-again" onclick="rate('again')">↺ Again<br><small>再来</small></button>
+      </div>
+    </div>
+    <div class="done" id="done-screen">
+      <div class="done-ico">🎉</div>
+      <div class="done-t">Round Complete!</div>
+      <div class="done-s">You reviewed all <b id="done-tot">150</b> cards.<br>Still learning: <b id="done-ag">0</b></div>
+      <button class="btn-restart" onclick="restart()">Study Again 再学一遍</button>
+    </div>
+  </div>
+
+  <!-- STORIES: sentence-by-sentence reader -->
+  <div id="tab-read" style="display:none">
+    <!-- Story list -->
+    <div id="story-list-view">
+      <p style="color:var(--soft);font-size:.88rem;margin:6px 0 12px">Read sentence by sentence. English first — tap to reveal Chinese. Tap any Chinese character to look it up.</p>
+      <div class="story-grid" id="story-grid"></div>
+    </div>
+    <!-- Sentence reader -->
+    <div id="story-reader-view" style="display:none">
+      <div class="reader-back" onclick="backToList()">← All Stories</div>
+      <div class="reader-hd">
+        <div class="reader-title" id="reader-title"></div>
+        <div class="reader-sub" id="reader-sub"></div>
+      </div>
+      <div class="rdr-bar"><i id="rdr-bar-i"></i></div>
+      <div class="sent-card" id="sent-card" onclick="revealSent()">
+        <div class="sent-lbl">English · 英文</div>
+        <div class="sent-en" id="sent-en"></div>
+        <div class="sent-hint" id="sent-hint">👆 Tap to reveal Chinese</div>
+        <div class="sent-zh-block" id="sent-zh-block">
+          <div class="sent-zh-lbl">Chinese · 中文</div>
+          <div class="sent-zh" id="sent-zh"></div>
+        </div>
+      </div>
+      <div class="rdr-actions">
+        <button class="btn-show-zh" id="btn-show-zh" onclick="revealSent()">Show Chinese 显示中文</button>
+        <div class="nav-row hidden" id="nav-row">
+          <button class="btn-nav" id="btn-prev" onclick="prevSent()">← Back</button>
+          <button class="btn-nav btn-nav-nxt" id="btn-next" onclick="nextSent()">Next →</button>
+        </div>
+      </div>
+      <div class="rdr-vocab hidden" id="rdr-vocab">
+        <div class="rdr-vocab-lbl">Key words in this story</div>
+        <div class="chips" id="rdr-chips"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ABOUT -->
+  <div id="tab-about" style="display:none">
+    <div class="about">
+      <h3>About This Tool</h3>
+      <p>All <strong>150 words from HSK Level 1</strong> — China's official beginner Chinese proficiency standard. HSK1 lets you handle greetings, numbers, time, daily objects, and simple sentences.</p>
+      <p><strong>Flashcards:</strong> See the Chinese character. Tap to reveal pinyin + English meaning + example sentence. Rate yourself: <em>Know / Fuzzy / Again</em>. Your progress is saved in your browser.</p>
+      <p><strong>Stories:</strong> Read an English story first. Then reveal the Chinese version. Tap any Chinese character to look it up instantly. Characters from HSK1 show full detail; others show basic info.</p>
+      <p>No login. No tracking. No cost. Data stays on your device.</p>
+      <p>Built by <a href="https://ordinarymantrying.com" target="_blank">Ordinary Man Trying</a>.<br>
+      Source: <a href="https://github.com/daligao/mandarin-flashcards" target="_blank">github.com/daligao/mandarin-flashcards</a></p>
+      <p style="border-top:1px solid var(--line);padding-top:12px;margin-top:12px">
+        <strong>More free tools:</strong><br>
+        <a href="https://ordinarymantrying.com/tools/gaokao-2026-english-exam.html" target="_blank">2026 Gaokao English Exam</a> ·
+        <a href="https://ordinarymantrying.com/tools/civil-service-challenge.html" target="_blank">China Civil Service Challenge</a> ·
+        <a href="https://ordinarymantrying.com/tools/investment-punch-card.html" target="_blank">Investment Punch Card</a>
+      </p>
+    </div>
+  </div>
+</div>
+
+<!-- POPUP for clicked Chinese character -->
+<div class="popup-ov" id="popup-ov" onclick="closePopup(event)">
+  <div class="popup" id="popup">
+    <button class="popup-close" onclick="closePopup()">✕</button>
+    <span class="popup-char" id="pop-char">你</span>
+    <div class="popup-py" id="pop-py">nǐ</div>
+    <div class="popup-pos" id="pop-pos">pron.</div>
+    <div class="popup-en" id="pop-en">you (singular)</div>
+    <div class="popup-ex" id="pop-ex">
+      <div class="popup-exzh" id="pop-exzh">你好！</div>
+      <div class="popup-exen" id="pop-exen">Hello!</div>
+    </div>
+    <div class="popup-none hidden" id="pop-none">This character isn't in the HSK1 list yet.</div>
+  </div>
+</div>
+
+<script>
+/* ---- DATA ---- */
+const WORDS = [
+  {c:"爱",py:"ài",pos:"v.",en:"love; like very much",zh:"我爱我的家人。",zhen:"I love my family."},
+  {c:"八",py:"bā",pos:"num.",en:"eight (8)",zh:"我有八本书。",zhen:"I have eight books."},
+  {c:"爸爸",py:"bàba",pos:"n.",en:"dad / father",zh:"我爸爸是老师。",zhen:"My dad is a teacher."},
+  {c:"杯子",py:"bēizi",pos:"n.",en:"cup / glass",zh:"这个杯子是我的。",zhen:"This cup is mine."},
+  {c:"北京",py:"Běijīng",pos:"n.",en:"Beijing (China's capital)",zh:"北京是中国的首都。",zhen:"Beijing is the capital of China."},
+  {c:"本",py:"běn",pos:"m.w.",en:"(measure word for books)",zh:"我有一本书。",zhen:"I have one book."},
+  {c:"不客气",py:"bù kèqi",pos:"phrase",en:"you're welcome",zh:"——谢谢！——不客气。",zhen:"—Thank you! —You're welcome."},
+  {c:"不",py:"bù",pos:"adv.",en:"not; no",zh:"我不喝茶。",zhen:"I don't drink tea."},
+  {c:"菜",py:"cài",pos:"n.",en:"dish; vegetable; food",zh:"这个菜很好吃！",zhen:"This dish is very tasty!"},
+  {c:"茶",py:"chá",pos:"n.",en:"tea",zh:"我喜欢喝茶。",zhen:"I like drinking tea."},
+  {c:"吃",py:"chī",pos:"v.",en:"eat",zh:"你吃饭了吗？",zhen:"Have you eaten yet?"},
+  {c:"出租车",py:"chūzūchē",pos:"n.",en:"taxi / cab",zh:"我坐出租车去机场。",zhen:"I'm taking a taxi to the airport."},
+  {c:"打电话",py:"dǎ diànhuà",pos:"v.",en:"make a phone call",zh:"我给妈妈打电话。",zhen:"I'm calling my mom."},
+  {c:"大",py:"dà",pos:"adj.",en:"big; large",zh:"这个苹果很大。",zhen:"This apple is very big."},
+  {c:"的",py:"de",pos:"part.",en:"possessive particle ('s)",zh:"这是我的书。",zhen:"This is my book."},
+  {c:"点",py:"diǎn",pos:"n.",en:"o'clock; dot; a little",zh:"现在三点。",zhen:"It's three o'clock now."},
+  {c:"电脑",py:"diànnǎo",pos:"n.",en:"computer",zh:"我的电脑是新的。",zhen:"My computer is new."},
+  {c:"电视",py:"diànshì",pos:"n.",en:"television / TV",zh:"我每天看电视。",zhen:"I watch TV every day."},
+  {c:"电影",py:"diànyǐng",pos:"n.",en:"movie / film",zh:"你喜欢看电影吗？",zhen:"Do you like watching movies?"},
+  {c:"东西",py:"dōngxi",pos:"n.",en:"thing; stuff; object",zh:"这是什么东西？",zhen:"What is this thing?"},
+  {c:"都",py:"dōu",pos:"adv.",en:"all; both; every",zh:"我们都是学生。",zhen:"We are all students."},
+  {c:"读",py:"dú",pos:"v.",en:"read (aloud); study",zh:"他读中文书。",zhen:"He reads Chinese books."},
+  {c:"对不起",py:"duìbuqǐ",pos:"phrase",en:"sorry; excuse me",zh:"对不起，我来晚了。",zhen:"Sorry, I'm late."},
+  {c:"多",py:"duō",pos:"adj.",en:"many; much; a lot",zh:"这里有很多人。",zhen:"There are a lot of people here."},
+  {c:"多少",py:"duōshao",pos:"pron.",en:"how many; how much",zh:"这个多少钱？",zhen:"How much does this cost?"},
+  {c:"儿子",py:"érzi",pos:"n.",en:"son",zh:"他有一个儿子。",zhen:"He has one son."},
+  {c:"二",py:"èr",pos:"num.",en:"two (2)",zh:"我有两个苹果。",zhen:"I have two apples."},
+  {c:"饭店",py:"fàndiàn",pos:"n.",en:"hotel; restaurant",zh:"我们去那个饭店吃饭。",zhen:"Let's eat at that restaurant."},
+  {c:"飞机",py:"fēijī",pos:"n.",en:"airplane / plane",zh:"我坐飞机去北京。",zhen:"I'm flying to Beijing."},
+  {c:"分钟",py:"fēnzhōng",pos:"n.",en:"minute",zh:"我等了二十分钟。",zhen:"I waited for twenty minutes."},
+  {c:"高兴",py:"gāoxìng",pos:"adj.",en:"happy; glad; pleased",zh:"认识你很高兴！",zhen:"Nice to meet you!"},
+  {c:"个",py:"gè",pos:"m.w.",en:"(general measure word)",zh:"我有三个苹果。",zhen:"I have three apples."},
+  {c:"工作",py:"gōngzuò",pos:"n./v.",en:"work; job; to work",zh:"你做什么工作？",zhen:"What do you do for work?"},
+  {c:"狗",py:"gǒu",pos:"n.",en:"dog",zh:"我家有一只狗。",zhen:"I have a dog at home."},
+  {c:"汉语",py:"Hànyǔ",pos:"n.",en:"Chinese language (Mandarin)",zh:"我在学汉语。",zhen:"I am learning Chinese."},
+  {c:"好",py:"hǎo",pos:"adj.",en:"good; well; fine",zh:"今天天气很好。",zhen:"The weather is very good today."},
+  {c:"好吃",py:"hǎochī",pos:"adj.",en:"delicious; tasty",zh:"这个菜真好吃！",zhen:"This dish is really delicious!"},
+  {c:"号",py:"hào",pos:"n.",en:"number; date (of month)",zh:"今天几号？",zhen:"What date is it today?"},
+  {c:"喝",py:"hē",pos:"v.",en:"drink",zh:"你喝茶还是咖啡？",zhen:"Do you want tea or coffee?"},
+  {c:"和",py:"hé",pos:"conj.",en:"and; with",zh:"我和朋友去看电影。",zhen:"I went to see a movie with a friend."},
+  {c:"很",py:"hěn",pos:"adv.",en:"very; quite",zh:"她很漂亮。",zhen:"She is very beautiful."},
+  {c:"后面",py:"hòumiàn",pos:"n.",en:"behind; back; in the back",zh:"商店在学校后面。",zhen:"The shop is behind the school."},
+  {c:"回",py:"huí",pos:"v.",en:"return; go back",zh:"我今天回家很晚。",zhen:"I came home very late today."},
+  {c:"会",py:"huì",pos:"modal v.",en:"can; know how to; will",zh:"你会说中文吗？",zhen:"Can you speak Chinese?"},
+  {c:"几",py:"jǐ",pos:"pron.",en:"how many (small number)",zh:"你有几个朋友？",zhen:"How many friends do you have?"},
+  {c:"家",py:"jiā",pos:"n.",en:"home; family; house",zh:"我家在北京。",zhen:"My home is in Beijing."},
+  {c:"叫",py:"jiào",pos:"v.",en:"be called; to call",zh:"我叫李明。",zhen:"My name is Li Ming."},
+  {c:"今天",py:"jīntiān",pos:"n.",en:"today",zh:"今天是星期几？",zhen:"What day of the week is it today?"},
+  {c:"九",py:"jiǔ",pos:"num.",en:"nine (9)",zh:"我九岁开始学英语。",zhen:"I started learning English at nine."},
+  {c:"开",py:"kāi",pos:"v.",en:"open; start; drive",zh:"请开门。",zhen:"Please open the door."},
+  {c:"看",py:"kàn",pos:"v.",en:"look; watch; read; see",zh:"我在看书。",zhen:"I am reading a book."},
+  {c:"看见",py:"kànjiàn",pos:"v.",en:"see; catch sight of",zh:"我看见一只猫。",zhen:"I see a cat."},
+  {c:"块",py:"kuài",pos:"n.",en:"yuan (Chinese currency); piece",zh:"这个苹果三块钱。",zhen:"This apple costs three yuan."},
+  {c:"来",py:"lái",pos:"v.",en:"come; arrive",zh:"你明天来吗？",zhen:"Are you coming tomorrow?"},
+  {c:"老师",py:"lǎoshī",pos:"n.",en:"teacher",zh:"我的老师很好。",zhen:"My teacher is very good."},
+  {c:"了",py:"le",pos:"part.",en:"(completed action particle)",zh:"我吃了。",zhen:"I've eaten."},
+  {c:"冷",py:"lěng",pos:"adj.",en:"cold",zh:"今天很冷。",zhen:"It's very cold today."},
+  {c:"里",py:"lǐ",pos:"prep.",en:"inside; in; within",zh:"书在包里。",zhen:"The book is inside the bag."},
+  {c:"六",py:"liù",pos:"num.",en:"six (6)",zh:"我六点起床。",zhen:"I get up at six o'clock."},
+  {c:"妈妈",py:"māma",pos:"n.",en:"mom / mother",zh:"我妈妈做饭很好吃。",zhen:"My mom cooks very delicious food."},
+  {c:"买",py:"mǎi",pos:"v.",en:"buy; purchase",zh:"我去商店买东西。",zhen:"I'm going to the shop to buy things."},
+  {c:"猫",py:"māo",pos:"n.",en:"cat",zh:"我的猫很可爱。",zhen:"My cat is very cute."},
+  {c:"没",py:"méi",pos:"adv.",en:"not have; haven't; didn't",zh:"我没有钱。",zhen:"I don't have money."},
+  {c:"没关系",py:"méi guānxi",pos:"phrase",en:"it's okay; no problem",zh:"——对不起！——没关系。",zhen:"—Sorry! —No problem."},
+  {c:"米饭",py:"mǐfàn",pos:"n.",en:"cooked rice",zh:"我每天吃米饭。",zhen:"I eat rice every day."},
+  {c:"明天",py:"míngtiān",pos:"n.",en:"tomorrow",zh:"明天见！",zhen:"See you tomorrow!"},
+  {c:"名字",py:"míngzi",pos:"n.",en:"name",zh:"你的名字叫什么？",zhen:"What is your name?"},
+  {c:"哪",py:"nǎ",pos:"pron.",en:"which; what (in questions)",zh:"你是哪国人？",zhen:"What country are you from?"},
+  {c:"哪儿",py:"nǎr",pos:"pron.",en:"where",zh:"你在哪儿？",zhen:"Where are you?"},
+  {c:"那",py:"nà",pos:"pron.",en:"that; those",zh:"那是我的书包。",zhen:"That is my school bag."},
+  {c:"呢",py:"ne",pos:"part.",en:"(soft question particle, 'and you?')",zh:"我很好，你呢？",zhen:"I'm fine, and you?"},
+  {c:"能",py:"néng",pos:"modal v.",en:"can; be able to",zh:"你能帮我吗？",zhen:"Can you help me?"},
+  {c:"你",py:"nǐ",pos:"pron.",en:"you (singular)",zh:"你好！",zhen:"Hello!"},
+  {c:"你好",py:"nǐ hǎo",pos:"phrase",en:"hello; hi",zh:"你好！我叫小明。",zhen:"Hello! My name is Xiao Ming."},
+  {c:"年",py:"nián",pos:"n.",en:"year",zh:"今年是2026年。",zhen:"This year is 2026."},
+  {c:"女儿",py:"nǚ'ér",pos:"n.",en:"daughter",zh:"她有一个女儿。",zhen:"She has one daughter."},
+  {c:"女人",py:"nǚrén",pos:"n.",en:"woman",zh:"那个女人是我的老师。",zhen:"That woman is my teacher."},
+  {c:"朋友",py:"péngyou",pos:"n.",en:"friend",zh:"她是我的好朋友。",zhen:"She is my good friend."},
+  {c:"漂亮",py:"piàoliang",pos:"adj.",en:"beautiful; pretty",zh:"北京很漂亮。",zhen:"Beijing is very beautiful."},
+  {c:"苹果",py:"píngguǒ",pos:"n.",en:"apple",zh:"我每天吃一个苹果。",zhen:"I eat one apple every day."},
+  {c:"七",py:"qī",pos:"num.",en:"seven (7)",zh:"一个星期有七天。",zhen:"There are seven days in a week."},
+  {c:"钱",py:"qián",pos:"n.",en:"money",zh:"这本书多少钱？",zhen:"How much does this book cost?"},
+  {c:"前面",py:"qiánmiàn",pos:"n.",en:"front; ahead; in front",zh:"学校在前面。",zhen:"The school is ahead."},
+  {c:"请",py:"qǐng",pos:"v.",en:"please; invite",zh:"请坐！",zhen:"Please sit down!"},
+  {c:"去",py:"qù",pos:"v.",en:"go; leave for a place",zh:"你去哪儿？",zhen:"Where are you going?"},
+  {c:"热",py:"rè",pos:"adj.",en:"hot; warm",zh:"今天很热。",zhen:"It's very hot today."},
+  {c:"人",py:"rén",pos:"n.",en:"person; people",zh:"这里有很多人。",zhen:"There are many people here."},
+  {c:"认识",py:"rènshi",pos:"v.",en:"know (a person); recognize",zh:"我认识他。",zhen:"I know him."},
+  {c:"日",py:"rì",pos:"n.",en:"sun; day; date",zh:"今天是五月一日。",zhen:"Today is May 1st."},
+  {c:"三",py:"sān",pos:"num.",en:"three (3)",zh:"我有三个朋友。",zhen:"I have three friends."},
+  {c:"商店",py:"shāngdiàn",pos:"n.",en:"shop; store",zh:"我去商店买东西。",zhen:"I'm going to the store."},
+  {c:"上",py:"shàng",pos:"n./prep.",en:"above; on; upper",zh:"书在桌子上。",zhen:"The book is on the table."},
+  {c:"上午",py:"shàngwǔ",pos:"n.",en:"morning (before noon)",zh:"我上午八点上课。",zhen:"I have class at 8 in the morning."},
+  {c:"少",py:"shǎo",pos:"adj.",en:"few; little; less",zh:"这里人很少。",zhen:"There are very few people here."},
+  {c:"谁",py:"shéi",pos:"pron.",en:"who",zh:"他是谁？",zhen:"Who is he?"},
+  {c:"什么",py:"shénme",pos:"pron.",en:"what",zh:"你叫什么名字？",zhen:"What is your name?"},
+  {c:"十",py:"shí",pos:"num.",en:"ten (10)",zh:"他十岁了。",zhen:"He is ten years old."},
+  {c:"时候",py:"shíhou",pos:"n.",en:"time; moment; when",zh:"你什么时候来？",zhen:"When are you coming?"},
+  {c:"是",py:"shì",pos:"v.",en:"be; is; am; are",zh:"我是学生。",zhen:"I am a student."},
+  {c:"书",py:"shū",pos:"n.",en:"book",zh:"这本书很好看。",zhen:"This book is very interesting."},
+  {c:"水",py:"shuǐ",pos:"n.",en:"water",zh:"我想喝水。",zhen:"I want to drink water."},
+  {c:"水果",py:"shuǐguǒ",pos:"n.",en:"fruit",zh:"我每天吃水果。",zhen:"I eat fruit every day."},
+  {c:"睡觉",py:"shuìjiào",pos:"v.",en:"sleep; go to bed",zh:"我十一点睡觉。",zhen:"I go to sleep at eleven o'clock."},
+  {c:"说",py:"shuō",pos:"v.",en:"say; speak; talk",zh:"他说中文说得很好。",zhen:"He speaks Chinese very well."},
+  {c:"四",py:"sì",pos:"num.",en:"four (4)",zh:"我家有四口人。",zhen:"There are four people in my family."},
+  {c:"岁",py:"suì",pos:"n.",en:"year(s) old",zh:"我二十岁。",zhen:"I am twenty years old."},
+  {c:"他",py:"tā",pos:"pron.",en:"he; him",zh:"他是我的朋友。",zhen:"He is my friend."},
+  {c:"她",py:"tā",pos:"pron.",en:"she; her",zh:"她是我的老师。",zhen:"She is my teacher."},
+  {c:"太",py:"tài",pos:"adv.",en:"too; extremely",zh:"太好了！",zhen:"That's great!"},
+  {c:"天气",py:"tiānqì",pos:"n.",en:"weather",zh:"今天天气怎么样？",zhen:"How's the weather today?"},
+  {c:"听",py:"tīng",pos:"v.",en:"listen; hear",zh:"我喜欢听音乐。",zhen:"I like listening to music."},
+  {c:"同学",py:"tóngxué",pos:"n.",en:"classmate; fellow student",zh:"他是我的同学。",zhen:"He is my classmate."},
+  {c:"我",py:"wǒ",pos:"pron.",en:"I; me",zh:"我是中国人。",zhen:"I am Chinese."},
+  {c:"我们",py:"wǒmen",pos:"pron.",en:"we; us",zh:"我们是朋友。",zhen:"We are friends."},
+  {c:"五",py:"wǔ",pos:"num.",en:"five (5)",zh:"我五点下班。",zhen:"I get off work at five."},
+  {c:"喜欢",py:"xǐhuan",pos:"v.",en:"like; enjoy; be fond of",zh:"我喜欢吃苹果。",zhen:"I like eating apples."},
+  {c:"下",py:"xià",pos:"n./prep.",en:"below; under; next",zh:"猫在桌子下面。",zhen:"The cat is under the table."},
+  {c:"下午",py:"xiàwǔ",pos:"n.",en:"afternoon",zh:"下午我去商店。",zhen:"In the afternoon I'm going to the store."},
+  {c:"下雨",py:"xià yǔ",pos:"v.",en:"rain; it rains",zh:"今天下雨了。",zhen:"It's raining today."},
+  {c:"先生",py:"xiānsheng",pos:"n.",en:"Mr.; sir; husband",zh:"王先生，你好！",zhen:"Hello, Mr. Wang!"},
+  {c:"现在",py:"xiànzài",pos:"n.",en:"now; at present",zh:"现在几点？",zhen:"What time is it now?"},
+  {c:"想",py:"xiǎng",pos:"v.",en:"want to; think; miss",zh:"我想吃苹果。",zhen:"I want to eat an apple."},
+  {c:"小",py:"xiǎo",pos:"adj.",en:"small; little; young",zh:"这只猫很小。",zhen:"This cat is very small."},
+  {c:"小姐",py:"xiǎojie",pos:"n.",en:"Miss; young lady",zh:"小姐，请问厕所在哪儿？",zhen:"Excuse me, Miss, where is the restroom?"},
+  {c:"些",py:"xiē",pos:"m.w.",en:"some; a few",zh:"我买了一些苹果。",zhen:"I bought some apples."},
+  {c:"写",py:"xiě",pos:"v.",en:"write",zh:"我写中文很慢。",zhen:"I write Chinese very slowly."},
+  {c:"谢谢",py:"xièxie",pos:"phrase",en:"thank you; thanks",zh:"谢谢你帮助我！",zhen:"Thank you for helping me!"},
+  {c:"星期",py:"xīngqī",pos:"n.",en:"week; day of the week",zh:"这个星期我很忙。",zhen:"I'm very busy this week."},
+  {c:"学生",py:"xuésheng",pos:"n.",en:"student; pupil",zh:"我是大学生。",zhen:"I am a university student."},
+  {c:"学习",py:"xuéxí",pos:"v./n.",en:"study; learn; learning",zh:"我每天学习两个小时。",zhen:"I study for two hours every day."},
+  {c:"学校",py:"xuéxiào",pos:"n.",en:"school",zh:"我的学校很大。",zhen:"My school is very big."},
+  {c:"一",py:"yī",pos:"num.",en:"one (1)",zh:"我有一个哥哥。",zhen:"I have one older brother."},
+  {c:"衣服",py:"yīfu",pos:"n.",en:"clothes; clothing",zh:"这件衣服多少钱？",zhen:"How much does this clothing cost?"},
+  {c:"医生",py:"yīshēng",pos:"n.",en:"doctor; physician",zh:"她是一位好医生。",zhen:"She is a good doctor."},
+  {c:"医院",py:"yīyuàn",pos:"n.",en:"hospital",zh:"我爸爸在医院工作。",zhen:"My dad works at a hospital."},
+  {c:"椅子",py:"yǐzi",pos:"n.",en:"chair",zh:"请坐在椅子上。",zhen:"Please sit on the chair."},
+  {c:"有",py:"yǒu",pos:"v.",en:"have; there is/are",zh:"我有一只猫。",zhen:"I have a cat."},
+  {c:"月",py:"yuè",pos:"n.",en:"month; moon",zh:"一年有十二个月。",zhen:"There are twelve months in a year."},
+  {c:"在",py:"zài",pos:"prep./v.",en:"at; in; on; be at a place",zh:"我在家里。",zhen:"I am at home."},
+  {c:"再见",py:"zàijiàn",pos:"phrase",en:"goodbye; see you again",zh:"再见！明天见！",zhen:"Goodbye! See you tomorrow!"},
+  {c:"怎么",py:"zěnme",pos:"pron.",en:"how; why; in what way",zh:"这个怎么说？",zhen:"How do you say this?"},
+  {c:"怎么样",py:"zěnmeyàng",pos:"phrase",en:"how about; what's it like",zh:"今天天气怎么样？",zhen:"What's the weather like today?"},
+  {c:"这",py:"zhè",pos:"pron.",en:"this; these",zh:"这是我的书。",zhen:"This is my book."},
+  {c:"中国",py:"Zhōngguó",pos:"n.",en:"China",zh:"中国是一个大国。",zhen:"China is a big country."},
+  {c:"中午",py:"zhōngwǔ",pos:"n.",en:"noon; midday",zh:"中午我们一起吃饭吧。",zhen:"Let's eat together at noon."},
+  {c:"住",py:"zhù",pos:"v.",en:"live; reside; stay",zh:"你住在哪里？",zhen:"Where do you live?"},
+  {c:"桌子",py:"zhuōzi",pos:"n.",en:"table; desk",zh:"书在桌子上。",zhen:"The book is on the table."},
+  {c:"字",py:"zì",pos:"n.",en:"character; word; letter",zh:"这个字怎么读？",zhen:"How do you read this character?"},
+  {c:"昨天",py:"zuótiān",pos:"n.",en:"yesterday",zh:"昨天我去了商店。",zhen:"Yesterday I went to the store."},
+  {c:"坐",py:"zuò",pos:"v.",en:"sit; travel by (transport)",zh:"请坐！",zhen:"Please sit down!"},
+  {c:"做",py:"zuò",pos:"v.",en:"do; make; cook",zh:"你做什么工作？",zhen:"What do you do for work?"}
+];
+
+/* Build lookup: single char → word entry */
+const LOOKUP = {};
+WORDS.forEach(w=>{
+  // index by each character in the word
+  [...w.c].forEach(ch=>{ if(!LOOKUP[ch]) LOOKUP[ch]=w; });
+  LOOKUP[w.c] = w; // also by full word
+});
+
+/* ---- PASSAGES: sentence-by-sentence ---- */
+const PASSAGES = [
+  {
+    n:1, enTitle:"My Family", zhTitle:"我的家",
+    sents:[
+      {en:"My name is Xiao Ming. I'm from China.", zh:"我叫小明。我是中国人。"},
+      {en:"My family has four people: my dad, my mom, my younger sister, and me.", zh:"我家有四口人：爸爸、妈妈、妹妹和我。"},
+      {en:"My dad is a doctor. He works at a big hospital.", zh:"爸爸是医生。他在大医院工作。"},
+      {en:"He comes home very late every day.", zh:"他每天很晚回家。"},
+      {en:"My mom is a teacher at our school.", zh:"妈妈是我们学校的老师。"},
+      {en:"The food she cooks is always delicious.", zh:"她做的饭总是很好吃。"},
+      {en:"My younger sister is eight years old. She loves watching TV.", zh:"妹妹八岁了。她喜欢看电视。"},
+      {en:"I'm a university student studying Chinese and English in Beijing.", zh:"我是大学生，在北京学习中文和英语。"},
+      {en:"I love my family very much.", zh:"我非常爱我的家人。"}
+    ],
+    vocab:[
+      {c:"家",py:"jiā",en:"family/home"},{c:"爸爸",py:"bàba",en:"dad"},{c:"妈妈",py:"māma",en:"mom"},
+      {c:"医生",py:"yīshēng",en:"doctor"},{c:"医院",py:"yīyuàn",en:"hospital"},{c:"老师",py:"lǎoshī",en:"teacher"},
+      {c:"好吃",py:"hǎochī",en:"delicious"},{c:"学生",py:"xuésheng",en:"student"},{c:"爱",py:"ài",en:"love"}
+    ]
+  },
+  {
+    n:2, enTitle:"A Day in Beijing", zhTitle:"在北京的一天",
+    sents:[
+      {en:"Today the weather is very nice — not too hot, not too cold.", zh:"今天天气很好——不太热，也不太冷。"},
+      {en:"I got up at eight o'clock in the morning.", zh:"我早上八点起床了。"},
+      {en:"I ate rice and an apple for breakfast, then took a taxi to school.", zh:"我吃了米饭和一个苹果当早饭，然后坐出租车去学校。"},
+      {en:"At noon, I had lunch with my classmates at a restaurant near school.", zh:"中午，我和同学一起去学校附近的饭店吃饭。"},
+      {en:"The food was really delicious.", zh:"菜真的很好吃。"},
+      {en:"In the afternoon, I went to the bookstore to buy some Chinese books.", zh:"下午，我去书店买了一些中文书。"},
+      {en:"But I didn't have much money, so I only bought one.", zh:"但是我没有很多钱，所以只买了一本。"},
+      {en:"In the evening, I watched TV at home and then read for a while.", zh:"晚上，我在家看了电视，然后读了一会儿书。"},
+      {en:"I went to sleep at eleven o'clock.", zh:"我十一点睡觉了。"},
+      {en:"Today was a good day. Goodbye, Beijing!", zh:"今天是个好日子。再见，北京！"}
+    ],
+    vocab:[
+      {c:"天气",py:"tiānqì",en:"weather"},{c:"出租车",py:"chūzūchē",en:"taxi"},{c:"同学",py:"tóngxué",en:"classmate"},
+      {c:"饭店",py:"fàndiàn",en:"restaurant"},{c:"好吃",py:"hǎochī",en:"delicious"},{c:"书",py:"shū",en:"book"},
+      {c:"买",py:"mǎi",en:"buy"},{c:"睡觉",py:"shuìjiào",en:"sleep"},{c:"再见",py:"zàijiàn",en:"goodbye"}
+    ]
+  },
+  {
+    n:3, enTitle:"Learning Chinese", zhTitle:"学汉语",
+    sents:[
+      {en:"My name is Emma. I am American.", zh:"我叫Emma。我是美国人。"},
+      {en:"I am learning Mandarin Chinese.", zh:"我在学汉语。"},
+      {en:"Chinese is difficult — especially the characters.", zh:"汉语很难——特别是汉字。"},
+      {en:"But I find it very interesting. I study for two hours every day.", zh:"但我觉得很有意思。我每天学习两个小时。"},
+      {en:"I can say hello, thank you, sorry, and goodbye.", zh:"我会说你好、谢谢、对不起和再见。"},
+      {en:"I can also write about thirty Chinese characters.", zh:"我还会写大约三十个汉字。"},
+      {en:"My teacher's name is Teacher Wang. She says my Chinese is improving every day.", zh:"我的老师叫王老师。她说我的汉语每天都在进步。"},
+      {en:"That makes me very happy!", zh:"这让我很高兴！"},
+      {en:"My dream is to go to China someday and see Beijing.", zh:"我的梦想是有一天去中国，看看北京。"},
+      {en:"I want to eat real Chinese food and talk with Chinese people in Chinese.", zh:"我想吃真正的中国菜，还想用中文和中国人说话。"},
+      {en:"Keep working hard!", zh:"继续努力！加油！"}
+    ],
+    vocab:[
+      {c:"汉语",py:"Hànyǔ",en:"Chinese language"},{c:"难",py:"nán",en:"difficult"},{c:"学习",py:"xuéxí",en:"study"},
+      {c:"老师",py:"lǎoshī",en:"teacher"},{c:"高兴",py:"gāoxìng",en:"happy"},{c:"中国",py:"Zhōngguó",en:"China"},
+      {c:"菜",py:"cài",en:"food/dish"},{c:"说话",py:"shuōhuà",en:"speak/talk"},{c:"谢谢",py:"xièxie",en:"thank you"}
+    ]
+  }
+];
+
+/* ---- FLASHCARD STATE ---- */
+let deck=[], curIdx=0, shown=false, stats={k:0,a:0};
+
+function loadState(){
+  try{ return JSON.parse(localStorage.getItem('mhsk1')||'null'); }catch(e){return null;}
+}
+function saveState(){
+  localStorage.setItem('mhsk1',JSON.stringify({deck:deck.map(w=>w.c),idx:curIdx,stats}));
+}
+function resetAll(){
+  if(!confirm('Reset all progress?')) return;
+  localStorage.removeItem('mhsk1');
+  init();
+}
+function shuffle(a){for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;}
+
+function init(){
+  const s=loadState();
+  if(s&&s.deck&&s.deck.length){
+    deck=s.deck.map(c=>WORDS.find(w=>w.c===c)).filter(Boolean);
+    if(!deck.length) deck=shuffle([...WORDS]);
+    curIdx=0; stats=s.stats||{k:0,a:0};
+  } else {
+    deck=shuffle([...WORDS]); curIdx=0; stats={k:0,a:0};
+  }
+  showCard();
+}
+
+function showCard(){
+  const doneEl=document.getElementById('done-screen');
+  const fc=document.getElementById('main-fc');
+  if(curIdx>=deck.length){
+    doneEl.classList.add('vis'); fc.style.display='none';
+    document.getElementById('btn-show').classList.add('hidden');
+    document.getElementById('btn-row').classList.add('hidden');
+    document.getElementById('done-tot').textContent=WORDS.length;
+    document.getElementById('done-ag').textContent=stats.a;
+    return;
+  }
+  doneEl.classList.remove('vis'); fc.style.display='flex';
+  const w=deck[curIdx];
+  document.getElementById('fc-zh').textContent=w.c;
+  document.getElementById('fc-py').textContent=w.py;
+  document.getElementById('fc-pos').textContent=w.pos;
+  document.getElementById('fc-en').textContent=w.en;
+  document.getElementById('fc-exzh').textContent=w.zh;
+  document.getElementById('fc-exen').textContent=w.zhen;
+  fc.classList.remove('shown'); shown=false;
+  document.getElementById('btn-show').classList.remove('hidden');
+  document.getElementById('btn-row').classList.add('hidden');
+  updateStats(); saveState();
+}
+
+function revealCard(){
+  if(shown) return;
+  shown=true;
+  document.getElementById('main-fc').classList.add('shown');
+  document.getElementById('btn-show').classList.add('hidden');
+  document.getElementById('btn-row').classList.remove('hidden');
+}
+
+function rate(r){
+  if(r==='k'){stats.k++; deck.splice(curIdx,1);}
+  else if(r==='a'){stats.a++; const c=deck.splice(curIdx,1)[0]; deck.splice(Math.min(curIdx+3,deck.length),0,c);}
+  else {curIdx++;} // fuzzy
+  if(r!=='fuzz') curIdx=Math.min(curIdx,deck.length);
+  showCard();
+}
+function restart(){deck=shuffle([...WORDS]);curIdx=0;stats={k:0,a:0};saveState();showCard();}
+
+function updateStats(){
+  document.getElementById('cnt-k').textContent=stats.k;
+  document.getElementById('cnt-l').textContent=deck.length-curIdx;
+  document.getElementById('cnt-a').textContent=stats.a;
+  document.getElementById('pbar').style.width=(stats.k/WORDS.length*100)+'%';
+}
+
+/* ---- POPUP ---- */
+function openPopup(char){
+  const w=LOOKUP[char];
+  document.getElementById('pop-char').textContent=char;
+  const hasWord=!!w;
+  document.getElementById('pop-py').textContent=w?w.py:'';
+  document.getElementById('pop-pos').textContent=w?w.pos:'';
+  document.getElementById('pop-en').textContent=w?w.en:'';
+  document.getElementById('pop-ex').classList.toggle('hidden',!hasWord);
+  document.getElementById('pop-none').classList.toggle('hidden',hasWord);
+  if(w){
+    document.getElementById('pop-exzh').textContent=w.zh;
+    document.getElementById('pop-exen').textContent=w.zhen;
+  }
+  document.getElementById('popup-ov').classList.add('open');
+}
+function closePopup(e){
+  if(!e||e.target===document.getElementById('popup-ov')||e.currentTarget.classList.contains('popup-close'))
+    document.getElementById('popup-ov').classList.remove('open');
+}
+
+/* ---- TOKENIZE Chinese text: wrap each char in a clickable span ---- */
+const ZH_RE=/[一-鿿㐀-䶿]/;
+function tokenizeZh(text){
+  return text.split('').map(ch=>{
+    if(ZH_RE.test(ch)) return `<span class="zh-tok" onclick="openPopup('${ch}')">${ch}</span>`;
+    if(ch==='\n') return '<br>';
+    return `<span class="zh-space">${ch.replace(/&/g,'&amp;').replace(/</g,'&lt;')}</span>`;
+  }).join('');
+}
+
+/* ---- STORY LIST ---- */
+let currentStory=0, currentSent=0;
+
+function buildStoryList(){
+  const grid=document.getElementById('story-grid');
+  grid.innerHTML=PASSAGES.map((p,i)=>`
+    <div class="story-card" onclick="openStory(${i})">
+      <div class="sc-num">Story ${p.n}</div>
+      <div class="sc-title">${p.enTitle}</div>
+      <div class="sc-zh">${p.zhTitle}</div>
+      <div class="sc-meta"><span>${p.sents.length} sentences</span></div>
+    </div>`).join('');
+}
+
+function openStory(idx){
+  currentStory=idx;
+  currentSent=0;
+  const p=PASSAGES[idx];
+  document.getElementById('reader-title').textContent=p.enTitle;
+  document.getElementById('reader-sub').textContent=p.zhTitle;
+  // vocab chips
+  const chips=document.getElementById('rdr-chips');
+  chips.innerHTML=p.vocab.map(v=>`
+    <div class="chip" onclick="openPopup('${v.c}')">
+      <span class="cz">${v.c}</span><span class="cp">${v.py}</span><span class="ce">${v.en}</span>
+    </div>`).join('');
+  document.getElementById('rdr-vocab').classList.remove('hidden');
+  document.getElementById('story-list-view').style.display='none';
+  document.getElementById('story-reader-view').style.display='block';
+  showSent(0);
+}
+
+function showSent(n){
+  const p=PASSAGES[currentStory];
+  currentSent=n;
+  const s=p.sents[n];
+  const total=p.sents.length;
+  // progress bar
+  document.getElementById('rdr-bar-i').style.width=((n+1)/total*100)+'%';
+  // sentence card
+  document.getElementById('sent-en').textContent=s.en;
+  const zhBlock=document.getElementById('sent-zh-block');
+  zhBlock.classList.remove('open');
+  document.getElementById('sent-zh').innerHTML='';
+  document.getElementById('sent-hint').style.display='block';
+  document.getElementById('btn-show-zh').style.display='block';
+  // nav row
+  const nav=document.getElementById('nav-row');
+  nav.classList.remove('hidden');
+  document.getElementById('btn-prev').disabled=(n===0);
+  const isLast=(n===total-1);
+  const btnNext=document.getElementById('btn-next');
+  btnNext.textContent=isLast?'Finish ✓':'Next →';
+}
+
+function revealSent(){
+  const p=PASSAGES[currentStory];
+  const s=p.sents[currentSent];
+  const zhBlock=document.getElementById('sent-zh-block');
+  if(zhBlock.classList.contains('open')) return;
+  document.getElementById('sent-zh').innerHTML=tokenizeZh(s.zh);
+  zhBlock.classList.add('open');
+  document.getElementById('sent-hint').style.display='none';
+  document.getElementById('btn-show-zh').style.display='none';
+}
+
+function nextSent(){
+  const p=PASSAGES[currentStory];
+  if(currentSent<p.sents.length-1){
+    showSent(currentSent+1);
+  } else {
+    backToList();
+  }
+}
+
+function prevSent(){
+  if(currentSent>0) showSent(currentSent-1);
+}
+
+function backToList(){
+  document.getElementById('story-reader-view').style.display='none';
+  document.getElementById('story-list-view').style.display='block';
+}
+
+/* ---- TABS ---- */
+function switchTab(id,btn){
+  ['cards','read','about'].forEach(t=>document.getElementById('tab-'+t).style.display=t===id?'block':'none');
+  document.querySelectorAll('.tab').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+}
+
+buildStoryList();
+init();
+</script>
+</body>
+</html>
