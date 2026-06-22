@@ -66,6 +66,7 @@ Single file. No build step. No dependencies.
 
 ## Also try
 
+- [Chinese Reading Lab](https://ordinarymantrying.com/tools/chinese-reading-lab.html) — 10 real historical decisions in Chinese (HSK4–6). Click vocab for pinyin. Make the call before history reveals what actually happened.
 - [Chinese Writing Toolkit](https://ordinarymantrying.com/tools/chinese-writing-toolkit.html) — 11 types of Chinese writing with sentence banks, templates, model essays
 - [All free tools](https://ordinarymantrying.com/tools/) — Gaokao exam, civil service quiz, investment tracker
 
