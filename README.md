@@ -1,8 +1,10 @@
 # Mandarin Chinese Flashcards 🇨🇳
 
-> Learn Mandarin Chinese the natural way — English first, Chinese revealed when you're ready.
+> 学中文从这里开始 · Learn Mandarin Chinese the natural way — English first, Chinese revealed when you're ready.
 
-**[→ Try it live (full version)](https://ordinarymantrying.com/tools/mandarin-flashcards.html)** &nbsp;·&nbsp; **[GitHub Pages mirror](https://daligao.github.io/mandarin-flashcards/mandarin-flashcards.html)**
+**[→ Full version: HSK1–3, 400+ words](https://ordinarymantrying.com/tools/mandarin-flashcards.html)** &nbsp;·&nbsp; **[GitHub Pages: HSK1 (150 words)](https://daligao.github.io/mandarin-flashcards/mandarin-flashcards.html)**
+
+⭐ **If this helped your Chinese studies, a star means a lot — it helps other learners find it.**
 
 ---
 
@@ -12,60 +14,71 @@ A browser-based Mandarin Chinese learning tool built for **English speakers**. N
 
 Two modes:
 
-### 🃏 Flashcards (卡片)
-- 150 HSK1 vocabulary words
-- Spaced repetition: **Know** (remove from deck) / **Fuzzy** (repeat later) / **Again** (reinsert soon)
-- Progress saved automatically in your browser
+### 🃏 Flashcards (单词卡片)
+- HSK1 vocabulary (150 words) — free on GitHub
+- **HSK1–3 (400+ words)** available at [ordinarymantrying.com](https://ordinarymantrying.com/tools/mandarin-flashcards.html)
+- Level filter: study All / HSK1 / HSK2 / HSK3 separately
+- Spaced repetition: **Know** / **Fuzzy** / **Again**
+- Progress saved in your browser
 
-### 📖 Stories (故事)
-- Short stories written in plain English
+### 📖 Stories (故事阅读)
+- Short stories in plain English
 - Read sentence by sentence — English first, Chinese revealed on tap
-- Every Chinese character is **clickable** — tap to see pinyin, English meaning, and example sentence
+- Every Chinese character is **clickable** → instant pinyin + meaning + example
 
 ---
 
 ## Features
 
-- 🈺 **Click any Chinese character** — instant popup with pinyin + meaning
+- 🈺 **Click any character** — pinyin + meaning popup, no dictionary needed
 - 📱 **Mobile-first** — works great on phone
-- 💾 **No login** — progress stored in localStorage
-- 🚫 **No tracking** — runs entirely in your browser, nothing sent anywhere
+- 💾 **Offline** — works without internet after first load
+- 🚫 **No login, no tracking** — runs entirely in your browser
+- 🔊 **Text-to-speech** — hear native Mandarin pronunciation
 - 🎨 **Red/crimson theme** — distinctly Chinese feel
-- 🔊 **Text-to-speech** — hear native Chinese pronunciation
 
 ---
 
-## How to use
+## GitHub vs Full Version
 
-Just open the HTML file in any browser, or use the hosted version:
+| | GitHub (this repo) | Website (full version) |
+|--|--|--|
+| HSK1 words | ✅ 150 words | ✅ |
+| HSK2 words | ❌ | ✅ 126 words |
+| HSK3 words | ❌ | ✅ 124 words |
+| Level filter | ❌ | ✅ |
+| Total | **150 words** | **400+ words** |
 
-**[ordinarymantrying.com/tools/mandarin-flashcards.html](https://ordinarymantrying.com/tools/mandarin-flashcards.html)**
+**Full version → [ordinarymantrying.com/tools/mandarin-flashcards.html](https://ordinarymantrying.com/tools/mandarin-flashcards.html)**
+
+---
+
+## How to use locally
+
+```bash
+git clone https://github.com/daligao/mandarin-flashcards.git
+open mandarin-flashcards.html
+```
 
 Single file. No build step. No dependencies.
 
 ---
 
-## The story behind it
+## Also try
 
-I'm an ordinary person living in China, writing about what I observe — the culture, the career paths, the everyday moments that don't make the international headlines. I built this tool because I needed it myself: a flashcard system that felt natural, not like drilling.
-
-I flipped the logic of my Chinese-student tools (designed for Chinese people learning English) and rebuilt everything for English speakers learning Mandarin.
-
-**More tools and writing about China:** [ordinarymantrying.com](https://ordinarymantrying.com)
-
-**All free tools:** [ordinarymantrying.com/tools/](https://ordinarymantrying.com/tools/)
-
-**Also try:** [Chinese Writing Toolkit](https://ordinarymantrying.com/tools/chinese-writing-toolkit.html) — sentence banks, templates, and model essays for 11 types of Chinese writing
+- [Chinese Writing Toolkit](https://ordinarymantrying.com/tools/chinese-writing-toolkit.html) — 11 types of Chinese writing with sentence banks, templates, model essays
+- [All free tools](https://ordinarymantrying.com/tools/) — Gaokao exam, civil service quiz, investment tracker
 
 ---
 
-## Related reading on the blog
+## The story behind it
 
-- [What it's actually like to learn Chinese as an adult](https://ordinarymantrying.com)
-- [Tools page — all free, all offline](https://ordinarymantrying.com/tools/)
+I'm an ordinary person living in China. I built this because I needed it: a flashcard system that felt natural, not like drilling. I flipped the logic of Chinese-student tools (designed for Chinese people learning English) and rebuilt everything for English speakers learning Mandarin.
+
+**Blog about life in China:** [ordinarymantrying.com](https://ordinarymantrying.com)
 
 ---
 
 ## License
 
-CC0 1.0 Universal — public domain. Fork it, translate it, use it however you want. No attribution required.
+CC0 1.0 Universal — public domain. Fork it, translate it, use it however you want.
